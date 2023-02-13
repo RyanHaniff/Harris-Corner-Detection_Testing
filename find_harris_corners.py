@@ -57,6 +57,7 @@ def find_harris_corners(input_img, k, window_size, threshold):
             #Calculate r for Harris Corner equation
             r = det - k*(trace**2)
 
+
             if r > threshold:
                 corner_list.append([x, y, r])
                 output_img[y,x] = (0,0,255)
@@ -65,29 +66,30 @@ def find_harris_corners(input_img, k, window_size, threshold):
 
 def main():
     
-    parser = argparse.ArgumentParser(description='Find Harris cornes from the image.')
-    parser.add_argument('image_path', type=str, help='Full path of the input image.')
-    parser.add_argument('--k', type=float, help='Value of Harris corner constant between 0.04 - 0.06.')
-    parser.add_argument('--window_size', type=int, help='Size / length of the windowing function / sliding window.')
-    parser.add_argument('--threshold', type=float, help='Threshold value to consider corner for particular response value.')
+    # parser = argparse.ArgumentParser(description='Find Harris cornes from the image.')
+    # parser.add_argument('image_path', type=str, help='Full path of the input image.')
+    # parser.add_argument('--k', type=float, help='Value of Harris corner constant between 0.04 - 0.06.')
+    # parser.add_argument('--window_size', type=int, help='Size / length of the windowing function / sliding window.')
+    # parser.add_argument('--threshold', type=float, help='Threshold value to consider corner for particular response value.')
+    #
+    # args = parser.parse_args()
     
-    args = parser.parse_args()
-    
-    img_path = args.image_path
+    img_path = 'images/building.jpg'
     k = 0.04
     window_size = 5
-    threshold = 10000.00
+    threshold = 0
     
-    if args.k:
-        k = args.k
-    
-    if args.window_size:
-        window_size = args.window_size
+    # if args.k:
+    #     k = args.k
+    #
+    # if args.window_size:
+    #     window_size = args.window_size
+    #
+    # if args.threshold:
+    #     threshold = args.threshold
         
-    if args.threshold:
-        threshold = args.threshold
-        
-    input_img = cv2.imread(img_path, 0)
+    input_img = cv2.imread(img_path)
+    input_img = cv2.cvtColor(input_img, cv2.COLOR_BGR2GRAY)
     
     cv2.imshow('Input Image', input_img)
     cv2.waitKey(0)
@@ -107,7 +109,7 @@ def main():
         corner_file.close()
         
         if corner_img is not None:
-            cv2.imwrite("corners_img.png", corner_img)
+            cv2.imwrite("corners_img_2.png", corner_img)
     else:
         print ("Error in input image!")
             
